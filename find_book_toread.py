@@ -186,9 +186,16 @@ def check_isbn(isbn):
     return 1
 
 
+# Given existing genre dictionary and a list of isbns
+# this creates new dictionary of genre based on list of ISBNs
+def create_new_genre_dict(genre_dict, list_isbn):
+    new_genre_dict = {}
+    for isbn in list_isbn:
+        createGenreDict(genre_dict[isbn], new_genre_dict, isbn)
+
+    return new_genre_dict
 
 def main():
-    gc = client.GoodreadsClient('k80yuezhMkvjj7BldKJHA', 'MT72i1WNQyJODTxFXWyQ944yLjmaIysmoqp6PHdGM')
 
     books_file_name = "/Users/vgarg/repos/find_book_toread/books"
     ignored_shelf_file_name = "/Users/vgarg/repos/find_book_toread/ignored_shelves"
