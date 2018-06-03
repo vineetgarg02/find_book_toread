@@ -119,6 +119,9 @@ def get_shelves(shelves_list, ignoredShelf, my_book_shelf):
             break
         shelf = canonicalize(shelf.name)
 
+        if(shelf == ''): # could be due to presence of all non alpha numeric
+            continue
+
         #Bogus shelf, ignore it
         if shelf in ignoredShelf:
             continue
