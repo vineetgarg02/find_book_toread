@@ -245,6 +245,19 @@ def display_genres(genre_to_isbn_dict, books):
             display_genres(new_genre_dict, books)
 
 
+def let_user_pick(options):
+    print("Please choose:")
+    for idx, element in enumerate(options):
+        print("{}) {}".format(idx+1,element))
+    i = input("Enter number: ")
+    try:
+        if 0 < int(i) <= len(options):
+            return int(i)
+    except:
+        pass
+    return None
+
+
 def main(api_key, api_sceret):
     try:
         gc = client.GoodreadsClient(api_key, api_sceret)
@@ -268,6 +281,8 @@ def main(api_key, api_sceret):
     ignored_shelf = obj_list[1]
     my_book_shelf = obj_list[2]
     genre_to_isbn_dict = obj_list[3]
+
+    options = ["Add new book (using ISBN)", "Find book to read", "Delete ISBN", ""]
 
     user_response = 'y'
     while user_response != 'q':
@@ -300,14 +315,14 @@ def main(api_key, api_sceret):
                 while isbn:
                     try:
                         fetch_book(gc, isbn.rstrip(), books, ignored_shelf, my_book_shelf, genre_to_isbn_dict)
-                        should_continue = input("\nShould continue with next ISBN?: ")
-                        if should_continue == 'n':
-                            f.close()
-                            serialize(books_file_name, books, ignored_shelf_file_name, ignored_shelf, my_book_shelf_file_name,
+                        #should_continue = input("\nShould continue with next ISBN?: ")
+                        #if should_continue == 'n':
+                        #    f.close()
+                        serialize(books_file_name, books, ignored_shelf_file_name, ignored_shelf, my_book_shelf_file_name,
                                   my_book_shelf, genre_to_isbn_file_name, genre_to_isbn_dict)
-                            break
-                        else:
-                            isbn = f.readline()
+                        #break
+                        #else:
+                        isbn = f.readline()
                     except:
                         f.close()
                         print("Something went wrong while fetching..")
